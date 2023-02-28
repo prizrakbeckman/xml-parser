@@ -1,0 +1,21 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  info:
+    env:
+      enabled: true
+
+info:
+  application:
+    name: xml-parser
+    description: xml parser on docker.
+    author: ADAM HARDOUMI
+    version: '@project.version@'
+filename:
+  xsd:
+    template: epaper-request.xsd
+spring:
+  profiles:
+    active: dev

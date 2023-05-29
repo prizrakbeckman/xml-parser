@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: xml-parser-k8s
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: xml-parser
+  namespace: xml-parser-k8s
+spec:
+  selector:
+    app: xml-parser-pod
+  ports:
+    - protocol: "TCP"
+      port: 8080
+      targetPort: 8080
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: xml-parser
+  namespace: xml-parser-k8s
+spec:
+  selector:
+    matchLabels:
+      app: xml-parser-pod
+  replicas: 0 # Number of replicas that will be created for this deployment
+  template:
+    metadata:
+      labels:
+        app: xml-parser-pod
+        owner: adamharddock
+    spec:
+      containers:
+        - name: xml-parser-container
+          image: adamharddock/apps-repo:1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
